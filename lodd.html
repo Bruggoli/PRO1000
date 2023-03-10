@@ -16,11 +16,14 @@
     
 <!-- Responsiv header, sender deg til index(hjem) -->
     <div class="header-section">
-        <div class="container">
+        <div class="heading-container">
             <a href="/index.html" aria-current="page" class="heading-link inline-block">
                 <h1 class="heading">Vinlotteri</h1>
             </a>
-
+            <div>
+                 <img src="/rsz_drue2.png" id="grape" alt="image of grape">
+            </div>
+        </div>
             <div class="nav-bar">
                     <a href="./lodd.html" id="nav-lodd" class="nav-link">Loddkjøp</a>
                     <a href="./trekning.html" id="nav-trekning" class="nav-link">Trekning</a>
@@ -33,20 +36,33 @@
     <main>
         <div class="row">
            <div class="column">
-            <table id="lodd">
+            <table id="loddtable">
+                <thead>
                 <tr>
+                    <th>Initialer</th>
                     <th>Navn</th>
-                    <th>Antall lodd</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>KL</td>
+                    <td>Kaisa Lien</td>
                 </tr>
                 <tr>
-                    <th>:D</th>
-                    <th>:)</th>
+                    <td>MJL</td>
+                    <td>Marius Jølsen Lindberg</td>
                 </tr>
                 <tr>
-                    <th>:]</th>
-                    <th>:o</th>
+                    <td>AR</td>
+                    <td>Adrian Indergård Ro</td>
                 </tr>
+                <tr>
+                    <td>MMM</td>
+                    <td>Markus Moen Magnussen</td>
+                </tr>
+            </tbody>
             </table>
+        </div>
            </div> 
             <div class="column">
                 <p></p>
@@ -57,12 +73,11 @@
     
    
       <footer>
-        <div>
-          <p>PRO1000</p>
+        <div class="footer-content">
+          <p class="footer-p">PRO1000</p>
         </div>
       </footer>
     </div>
-  
 
  </div>
 </div>
