@@ -213,7 +213,7 @@ tbody tr:last-of-type {
 }
 
 footer {
-  background-image: url(./grape.png);
+  background-image: url(/Images/grape.png);
   position: absolute;
   bottom: 0;
   width: 100%;

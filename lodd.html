@@ -7,6 +7,7 @@
   <title>Hjem | Vinlotteri</title>
 
   <link rel="stylesheet" href="style.css">
+  <script src="scripts.js"></script>
 </head>
 <body>
     <div id="page-container">
@@ -21,7 +22,7 @@
                 <h1 class="heading">Vinlotteri</h1>
             </a>
             <div>
-                 <img src="/rsz_drue2.png" id="grape" alt="image of grape">
+                 <img src="images/rsz_drue2.png" id="grape" alt="image of grape">
             </div>
         </div>
             <div class="nav-bar">
@@ -30,8 +31,8 @@
             </div>
         </div>
     </div>
-    
 
+    <script>jsonStorage()</script>
 
     <main>
         <div class="row">
@@ -40,27 +41,12 @@
                 <thead>
                 <tr>
                     <th>Initialer</th>
-                    <th>Navn</th>
+                    <th id="navn">Navn</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>KL</td>
-                    <td>Kaisa Lien</td>
-                </tr>
-                <tr>
-                    <td>MJL</td>
-                    <td>Marius Jølsen Lindberg</td>
-                </tr>
-                <tr>
-                    <td>AR</td>
-                    <td>Adrian Indergård Ro</td>
-                </tr>
-                <tr>
-                    <td>MMM</td>
-                    <td>Markus Moen Magnussen</td>
-                </tr>
-            </tbody>
+                    <script>fillTable()</script>
+                </tbody>
             </table>
         </div>
            </div> 
