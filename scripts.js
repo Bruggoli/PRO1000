@@ -89,3 +89,14 @@ function fillTable() {
         table.getElementsByTagName("tbody")[0].appendChild(newRow);
     }
 }
+
+function giLodd() {
+
+}
+
+function trekning() {
+    var navn = JSON.parse(localStorage.getItem("Navneliste"));
+    var vinner = document.getElementById("vinner");
+    let deVant = navn[0].name[0];
+    vinner.innerText = deVant;
+}
