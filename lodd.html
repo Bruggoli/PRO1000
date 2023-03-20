@@ -7,7 +7,6 @@
   <title>Hjem | Vinlotteri</title>
 
   <link rel="stylesheet" href="style.css">
-  <script src="scripts.js"></script>
 </head>
 <body>
     <div id="page-container">
@@ -22,7 +21,7 @@
                 <h1 class="heading">Vinlotteri</h1>
             </a>
             <div>
-                 <img src="images/rsz_drue2.png" id="grape" alt="image of grape">
+                 <img src="/grapeicon.png" id="grape" alt="image of grape">
             </div>
         </div>
             <div class="nav-bar">
@@ -31,29 +30,87 @@
             </div>
         </div>
     </div>
+    
 
-    <script>jsonStorage()</script>
 
     <main>
+
+        <section class="row">
+        </section>
+
         <div class="row">
            <div class="column">
-            <table id="loddtable">
+            <div class="scroll">
+            <table class="table-left">
                 <thead>
                 <tr>
+                    <th>Loddnr.</th>
                     <th>Initialer</th>
-                    <th id="navn">Navn</th>
+                    <th>Navn</th>
                 </tr>
                 </thead>
                 <tbody>
-                    <script>fillTable()</script>
-                </tbody>
+                <tr>
+                    <td>1</td>
+                    <td>KL</td>
+                    <td>Kaisa Lien</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>MJL</td>
+                    <td>Marius Jølsen Lindberg</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>AR</td>
+                    <td>Adrian Indergård Ro</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>MMM</td>
+                    <td>Markus Moen Magnussen</td>
+                </tr>
+            </tbody>
             </table>
         </div>
-           </div> 
+            </div>
+
             <div class="column">
-                <p></p>
+                <div class="scroll">
+                <table class="table-right">
+                    <thead>
+                    <tr>
+                        <th>Initialer</th>
+                        <th>Navn</th>
+                        <th>Antall lodd</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>KL</td>
+                        <td>Kaisa Lien</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>MJL</td>
+                        <td>Marius Jølsen Lindberg</td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td>AIR</td>
+                        <td>Adrian Indergård Ro</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>MMM</td>
+                        <td>Markus Moen Magnussen</td>
+                        <td>10</td>
+                    </tr>
+                </tbody>
+                </table>
+                </div>
+                </div>
             </div> 
-        </div>
       </main>
   
     
