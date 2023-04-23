@@ -1,5 +1,3 @@
-const { Session } = require("express-session");
-
 function loadFile() {
     document.getElementById('file').onchange = () => {
         const file = document.getElementById('file').files[0];
