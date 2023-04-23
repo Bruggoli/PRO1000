@@ -4,11 +4,13 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hjem | Vinlotteri</title>
+  <title>Hjem | Kakelotteri</title>
 
   <link rel="stylesheet" href="style.css">
+  <script src="scripts.js"></script>
 </head>
 <body>
+    <script>jsonStorage()</script>
     <div id="page-container">
         <div id="content-wrapper">
   
@@ -18,7 +20,7 @@
     <div class="header-section">
         <div class="heading-container">
             <a href="/index.html" aria-current="page" class="heading-link inline-block">
-                <h1 class="heading">Vinlotteri</h1>
+                <h1 class="heading">Kakeotteri</h1>
             </a>
             <div>
                  <img src="/grapeicon.png" id="grape" alt="image of grape">
@@ -43,34 +45,14 @@
             <div class="scroll">
             <table class="table-left">
                 <thead>
-                <tr>
-                    <th>Loddnr.</th>
-                    <th>Initialer</th>
-                    <th>Navn</th>
-                </tr>
+                    <tr>
+                        <th>Navn</th>
+                        <th>Initialer</th>
+                        <th>Lodd#</th>
+                    </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>KL</td>
-                    <td>Kaisa Lien</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>MJL</td>
-                    <td>Marius Jølsen Lindberg</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>AR</td>
-                    <td>Adrian Indergård Ro</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>MMM</td>
-                    <td>Markus Moen Magnussen</td>
-                </tr>
-            </tbody>
+                <tbody id="tableBodyLeft">
+                </tbody>
             </table>
         </div>
             </div>
@@ -85,32 +67,16 @@
                         <th>Antall lodd</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>KL</td>
-                        <td>Kaisa Lien</td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>MJL</td>
-                        <td>Marius Jølsen Lindberg</td>
-                        <td>7</td>
-                    </tr>
-                    <tr>
-                        <td>AIR</td>
-                        <td>Adrian Indergård Ro</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>MMM</td>
-                        <td>Markus Moen Magnussen</td>
-                        <td>10</td>
-                    </tr>
-                </tbody>
+                    <tbody id="tableBody">
+                        <script>fillTable("tableBody", "Navneliste")</script>
+                    </tbody>
                 </table>
                 </div>
                 </div>
-            </div> 
+            </div>
+            <button onclick="giLodd()">Gi Lodd</button> 
+
+            <button onclick="velgVinner()">Velg vinner</button>
       </main>
   
     
