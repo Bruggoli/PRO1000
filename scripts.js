@@ -134,28 +134,31 @@ function giLodd() {
             localStorage.setItem("deltakere", JSON.stringify(deltakere));
         }
     }
+    if (lodd > 0) {
+        for (var i = 0; i < deltakere.length; i++) {
+            for (var j = 1; j <= deltakere[i].lodd; j++) {
+                console.log("deltaker", i, "navn: " + deltakere[i].navn + ", lodd: " + loddnr++);
+                var newRow = document.createElement("tr");
+                newRow.setAttribute("id", "deltakerRow" + rad);
 
-    for (var i = 0; i < deltakere.length; i++) {
-        for (var j = 1; j <= deltakere[i].lodd; j++) {
-            console.log("deltaker", i, "navn: " + deltakere[i].navn + ", lodd: " + loddnr++);
-            var newRow = document.createElement("tr");
-            newRow.setAttribute("id", "deltakerRow" + rad);
+                var loddCell = document.createElement("td");
+                loddCell.setAttribute("id", "deltakerLodd" + rad);
+                loddCell.textContent = loddnr; // Set loddCell textContent to the current ticket number
 
-            var loddCell = document.createElement("td");
-            loddCell.setAttribute("id", "deltakerLodd" + rad);
-            loddCell.textContent = loddnr; // Set loddCell textContent to the current ticket number
+                var nameCell = document.createElement("td");
+                nameCell.setAttribute("id", "deltakerNavn" + rad);
+                nameCell.textContent = deltakere[i].navn;
 
-            var nameCell = document.createElement("td");
-            nameCell.setAttribute("id", "deltakerNavn" + rad);
-            nameCell.textContent = deltakere[i].navn;
-
-            newRow.appendChild(nameCell);
-            newRow.appendChild(loddCell);
-            deltakertabell.appendChild(newRow);
-            rad++;
+                newRow.appendChild(nameCell);
+                newRow.appendChild(loddCell);
+                deltakertabell.appendChild(newRow);
+                rad++;
+            }
         }
+        sessionStorage.setItem("loddnr", loddnr);
+    } else {
+        alert("Ingen lodd å gi!");
     }
-    sessionStorage.setItem("loddnr", loddnr);
 }
 
 
@@ -293,6 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const file = event.target.files[0];
 
         if (file) {
+            try {
             const reader = new FileReader();
             reader.onload = (e) => {
                 const contents = e.target.result;
@@ -304,6 +308,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 fillTable("tableBody");
             };
             reader.readAsText(file);
+        } catch (e) {
+            console.log("Failed to read file: ", e);
+        }
         }
     });
 });

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hjem | Kakelotteri</title>
+  <title>Kakelotteri</title>
 
   <link rel="stylesheet" href="style.css">
   <script src="scripts.js"></script>
@@ -21,24 +21,24 @@
             <div class="modal">
               <button class="close-button">&times;</button>
               <ul>
-                <li><a onclick="downloadNavneliste()">Last ned navneliste</a></li>
-                <li><a onclick="addGuest()">Legg til gjest</a></li>
-                <li><a onclick="addNavn()">Legg til nytt navn</a></li>
+                  <li><a onclick="addNavn()">Legg til nytt navn</a></li>
+                  <li><a onclick="addGuest()">Legg til gjest</a></li>
+                  <li><a onclick="downloadNavneliste()">Last ned navneliste</a></li>
               </ul>
             </div>
           </div>
           <button class="hamburger-button">&#9776;</button>
         <div class="heading-container">
-            <a href="/index.html" aria-current="page" class="heading-link inline-block">
-                <h1 class="heading">Kakeotteri</h1>
+            <a href="/lodd.html" aria-current="page" class="heading-link inline-block">
+                <h1 class="heading">Kakelotteri</h1>
             </a>
             <div>
                  <img src="/grapeicon.png" id="grape" alt="image of grape">
             </div>
         </div>
             <div class="nav-bar">
-                <a onclick="playSound('sounds/trekning.mp3', velgVinner())" id="nav-trekning" class="nav-link">Kjør trekning</a>
                 <a onclick="giLodd()" id="nav-lodd" class="nav-link">Del ut lodd</a>
+                <a onclick="playSound('sounds/trekning.mp3', velgVinner())" id="nav-trekning" class="nav-link">Kjør trekning</a>
             </div>
         </div>
     </div>
@@ -57,10 +57,10 @@
                 <thead>
                     <tr>
                         <th>Navn</th>
-                        <th>Lodd#</th>
+                        <th>Ønskede lodd</th>
                     </tr>
                 </thead>
-                <tbody id="tableBodyLeft">
+                <tbody id="tableBody">
                 </tbody>
             </table>
         </div>
@@ -72,21 +72,20 @@
                     <thead>
                     <tr>
                         <th>Navn</th>
-                        <th>Antall lodd</th>
+                        <th>Loddnr.</th>
                     </tr>
                     </thead>
-                    <tbody id="tableBody">
+                    <tbody id="tableBodyLeft">
                     </tbody>
                 </table>
                 </div>
                 </div>
             </div>
-
-            <input type="file" id="file-input" accept=".txt">Last opp navneliste</button>
+            <div id="filopplastningsboks">
+            <p id="filopplasting">Last opp navneliste</p>
+            <input type="file" id="file-input" accept=".txt"></button>
+            </div>
       </main>
-  
-    
-   
       <footer>
         <div class="footer-content">
           <p class="footer-p">PRO1000</p>
@@ -99,5 +98,3 @@
 </div>
 </body>
 </html>
-
-
