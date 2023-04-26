@@ -89,19 +89,28 @@ function fillTable() {
         nameCell.setAttribute("id", "navn" + i);
         nameCell.textContent = json[0].navn[i];
 
-        var loddCell = document.createElement("input");
+        var loddCell = document.createElement("td");
 
-        loddCell.setAttribute("type", "number");
-        loddCell.setAttribute("id", "inputRow" + i);
-        loddCell.setAttribute("class", "inputLodd");
-        loddCell.setAttribute("min", "0");
-        loddCell.setAttribute("value", "0");
+        var inputWrapper = document.createElement("div");
+        inputWrapper.setAttribute("class", "inputWrapper");
+
+        var inputElement = document.createElement("input");
+
+        inputElement.setAttribute("type", "number");
+        inputElement.setAttribute("id", "inputRow" + i);
+        inputElement.setAttribute("class", "inputLodd");
+        inputElement.setAttribute("min", "0");
+        inputElement.setAttribute("value", "0");
+
+        inputWrapper.appendChild(inputElement);
+        loddCell.appendChild(inputWrapper);
 
         newRow.appendChild(nameCell);
         newRow.appendChild(loddCell);
         document.getElementById("tableBody").appendChild(newRow);
     }
 }
+
 
 
 function giLodd() {

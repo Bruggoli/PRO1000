@@ -387,6 +387,10 @@ li a {
   color: black;
 }
 
+.inputWrapper {
+  display: inline-block;
+}
+
 .inputLodd {
   display: block;
   margin-left: auto;
