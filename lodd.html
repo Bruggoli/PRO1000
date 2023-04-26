@@ -36,20 +36,16 @@
                  <img src="/grapeicon.png" id="grape" alt="image of grape">
             </div>
         </div>
-            <div class="nav-bar">
-                <a onclick="giLodd()" id="nav-lodd" class="nav-link">Del ut lodd</a>
-                <a onclick="playSound('sounds/trekning.mp3', velgVinner())" id="nav-trekning" class="nav-link">Kjør trekning</a>
-            </div>
         </div>
     </div>
     
-
-
     <main>
-
-        <section class="row">
+        <section>
+            <div id="filopplastningsboks">
+                <p>Last inn fil her</p>
+                <input type="file" id="file-input" accept=".txt"></button>
+            </div>
         </section>
-
         <div class="row">
            <div class="column">
             <div class="scroll">
@@ -64,8 +60,11 @@
                 </tbody>
             </table>
         </div>
-            </div>
-
+            <!--Knapp for å dele ut lodd-->
+        <div class="button">
+            <a onclick="giLodd()" id="nav-lodd" class="nav-link">Del ut lodd</a>
+        </div>
+        </div>
             <div class="column">
                 <div class="scroll">
                 <table class="table-right">
@@ -79,12 +78,14 @@
                     </tbody>
                 </table>
                 </div>
+                <!--Knapp for å kjøre trekning-->
+                <div class="button">
+                    <a onclick="playSound('sounds/trekning.mp3', velgVinner())" id="nav-trekning" class="nav-link">Kjør trekning</a>
                 </div>
+                </div>
+
             </div>
-            <div id="filopplastningsboks">
-            <p id="filopplasting">Last opp navneliste</p>
-            <input type="file" id="file-input" accept=".txt"></button>
-            </div>
+
       </main>
       <footer>
         <div class="footer-content">
