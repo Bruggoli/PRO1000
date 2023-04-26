@@ -10,7 +10,6 @@
   <script src="scripts.js"></script>
 </head>
 <body>
-    <script>jsonStorage()</script>
     <div id="page-container">
         <div id="content-wrapper">
   
@@ -47,7 +46,6 @@
                 <thead>
                     <tr>
                         <th>Navn</th>
-                        <th>Initialer</th>
                         <th>Lodd#</th>
                     </tr>
                 </thead>
@@ -62,13 +60,11 @@
                 <table class="table-right">
                     <thead>
                     <tr>
-                        <th>Initialer</th>
                         <th>Navn</th>
                         <th>Antall lodd</th>
                     </tr>
                     </thead>
                     <tbody id="tableBody">
-                        <script>fillTable("tableBody", "Navneliste")</script>
                     </tbody>
                 </table>
                 </div>
@@ -76,7 +72,15 @@
             </div>
             <button onclick="giLodd()">Gi Lodd</button> 
 
-            <button onclick="velgVinner()">Velg vinner</button>
+            <button onclick="playSound('sounds/trekning1.mp3', velgVinner())">Velg vinner</button>
+
+            <button onclick="downloadNavneliste()">Last ned navneliste</button>
+
+            <input type="file" id="file-input" accept=".txt">Last opp navneliste</button>
+
+            <button onclick="addGuest()">Legg til gjest</button>
+
+            <button onclick="addNavn()">Legg til ny fast deltaker</button>
       </main>
   
     

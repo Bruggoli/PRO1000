@@ -1,3 +1,5 @@
+var lodd = 0;
+
 function loadFile() {
     document.getElementById('file').onchange = () => {
         const file = document.getElementById('file').files[0];
@@ -16,19 +18,20 @@ function loadFile() {
     };
 }
 
-function storeCache(info) {
+function storeCache(jsonObj) {
     let oldData = localStorage.getItem("Navneliste");
     if (oldData) {
-        // todo if exists
-        localStorage.setItem("Navneliste", info);
+        // Update the localStorage with the new JSON object
+        localStorage.setItem("Navneliste", JSON.stringify(jsonObj));
         console.log("LocalStorage Updated");
+        fillTable();
     } else {
-        localStorage.setItem("Navneliste", info);
+        // Store the new JSON object in the localStorage
+        localStorage.setItem("Navneliste", JSON.stringify(jsonObj));
         console.log("LocalStorage Created");
     }
-
-    //splitUsers();
 }
+
 
 function copyClipboard() {
     // Copy the text inside localstorage
@@ -38,148 +41,77 @@ function copyClipboard() {
     alert("Copied the text: " + localStorage.getItem("Navneliste"));
 }
 
-function jsonStorage() {
-    // change to get names from json file
-    var navn = [{
-        "name": [   "Anne Gry Sturød",    
-                    "Amalie H. Røimål",    
-                    "Anette Myhre Momrak",    
-                    "Asbjørn Nygård",    
-                    "Anh Nguyen Duc",    
-                    "Aud Stokland",    
-                    "Bjørn Kristoffersen",    
-                    "Birgit Leick",    
-                    "Christian Persson",    
-                    "Dieu Tien Bui",    
-                    "Erik Aarnes",    
-                    "Endre Før Gjermundsen",    
-                    "Elisabeth Fleseland",    
-                    "Einar Mo",    
-                    "Gjest 1",    
-                    "Gjest 2",    
-                    "Gudrun Helgadottir",    
-                    "Gunn Kristin Leikvoll",    
-                    "Helge Gjermund Kaasin",    
-                    "Håkon Svendsen",    
-                    "Ingeborg Nordbø",    
-                    "Ingrid Sundbø",    
-                    "Jon Kvisli",    
-                    "Karl Johan Gloppen",    
-                    "Lars Halvor O. Johnsen",    
-                    "Lars Sanden",    
-                    "Martin Falk",    
-                    "Mesay Moges Menebo",    
-                    "Nuno Marques",    
-                    "Niklas Valter Kreander",    
-                    "Per Christian Hagen",    
-                    "Per Strømberg",    
-                    "Runar Gundersen",    
-                    "Roy Martin Istad",    
-                    "Sigbjørn Hjelmbrekke",    
-                    "Safiqul Islam",    
-                    "Simone",    
-                    "Terje Andersen",    
-                    "Tor Lønnestad",    
-                    "Øystein A. Wendelborg",    
-                    "Hege Skogli Riege"]
-    }];
 
-
-    localStorage.setItem("Navneliste", JSON.stringify(navn));
+function cacheExists() {
+    if (localStorage.getItem("Navneliste") === null || typeof localStorage.getItem("Navneliste") === 'undefined') {
+        console.log("No cache found");
+        const fileInput = document.getElementById('file-input');
+        fileInput.addEventListener('change', (event) => {
+            // Handle file upload
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.addEventListener('load', (event) => {
+                const jsonData = JSON.parse(event.target.result);
+                // Store data in localStorage
+                storeCache(jsonData);
+            });
+            reader.readAsText(file);
+        });
+        // Display popup
+        alert('Please select a file');
+        setTimeout(function () {
+            fileInput.click();
+        }, 100);
+        fileInput.click();
+    } else {
+        // needs delay to fill table, otherwise the function is called before the table is created
+        console.log("Cache found");
+        setTimeout(function() {
+            fillTable();
+        }, 100);
+    }
 }
 
-function fillTable(tableIn, jsonIn) {
-    var json = JSON.parse(localStorage.getItem(jsonIn));
-    console.log("filltable test 1: " + json[0].name[0]);
-    var table = document.getElementsByClassName(tableIn);
-    
-    for (var i = 0; i < json[0].name.length; i++) {
+// cacheExists() is called when the page is loaded, clears up the HTML
+document.addEventListener("DOMContentLoaded", function () {
+    cacheExists();
+});
+
+
+function fillTable() {
+    var table = document.getElementById("tableBody");
+    var json = JSON.parse(localStorage.getItem("Navneliste"));
+
+    for (var i = 0; i < json[0].navn.length; i++) {
         var newRow = document.createElement("tr");
         newRow.setAttribute("id", "row" + i);
-        console.log(json[0].name[i]);
+
         var nameCell = document.createElement("td");
         nameCell.setAttribute("id", "navn" + i);
-        nameCell.textContent = json[0].name[i];
-        
-        let nameArr = json[0].name[i].split(" ");
-        
-        var initCell = document.createElement("td");
-        var initials = "";
-        for (n in nameArr) {
-            initials += nameArr[n].slice(0, 1);
-        }
-        initCell.setAttribute("id", "init" + i);
-        initCell.textContent = initials;
-        console.log("init " + initials);
+        nameCell.textContent = json[0].navn[i];
+
         var loddCell = document.createElement("input");
-        
+
         loddCell.setAttribute("type", "number");
-        loddCell.setAttribute("id", "inputRow"+ i);
+        loddCell.setAttribute("id", "inputRow" + i);
         loddCell.setAttribute("class", "inputLodd");
-        
-        newRow.appendChild(initCell);
+        loddCell.setAttribute("min", "0");
+        loddCell.setAttribute("value", "0");
+
         newRow.appendChild(nameCell);
         newRow.appendChild(loddCell);
         document.getElementById("tableBody").appendChild(newRow);
     }
 }
-/*
-function giLodd() {
-    var navneliste = document.getElementById("tableBody");
-    var deltakere = document.getElementById("tableBodyLeft");
-    var rad = 0;
-    var lodd = 0;
 
-    // this is the loop that goes through the table
-    // and checks if the input is 0 or not
-    // if it is 0, it skips the row
-    // if it is not 0, it adds the name and lodd to the tableBodyLeft
-    for (var i = 0; i < navneliste.rows.length; i++) {
-        if (document.getElementById("inputRow" + i).value <= 0) {
-            // console.log("ingen lodd");
-        } else {
-            for (var i = 0; i < document.getElementById("inputRow" + i).value; i++) {
-                var navn = document.getElementById("navn" + i).textContent;
-                var lodd = document.getElementById("inputRow" + i).value;
-
-                // overfør lodd og navn til tableBodyLeft
-                var newRow = document.createElement("tr");
-                newRow.setAttribute("id", "spillerRow" + rad);
-
-                var loddCell = document.createElement("td");
-                loddCell.setAttribute("id", "spillerLodd" + rad);
-                loddCell.textContent = lodd++;
-                // console.log("giLodd test 2: " + lodd);
-
-                var initCell = document.createElement("td");
-                initCell.textContent = document.getElementById("init" + i).innerHTML;
-
-                var nameCell = document.createElement("td");
-                nameCell.setAttribute("id", "spillerNavn" + rad);
-                nameCell.textContent = navn;
-                //console.log("giLodd test 1: " + navn);
-                
-                newRow.appendChild(nameCell);
-                newRow.appendChild(initCell);
-                newRow.appendChild(loddCell);
-                deltakere.appendChild(newRow);
-                rad++;
-            }
-        }
-    }
-
-    console.log("lodd tildelt");
-}
-*/
 
 function giLodd() {
-    clearTableBodyLeft();
+    clearTableBody("tableBodyLeft");
     var navneliste = document.getElementById("tableBody");
     var deltakertabell = document.getElementById("tableBodyLeft");
     var deltakere = [];
-    var lodd = 0;
     var rad = 0;
-    
+
     if (sessionStorage.getItem("loddnr") != null) {
         var loddnr = 0;
     } else {
@@ -199,6 +131,7 @@ function giLodd() {
             deltakere.push(deltaker);
             lodd += parseInt(inputRow.value);
             console.log("lodd tildelt: " + lodd);
+            // TODO: change to localStorage
             sessionStorage.setItem("deltakere", JSON.stringify(deltakere));
         }
     }
@@ -208,15 +141,15 @@ function giLodd() {
             console.log("deltaker", i, "navn: " + deltakere[i].navn + ", lodd: " + loddnr++);
             var newRow = document.createElement("tr");
             newRow.setAttribute("id", "deltakerRow" + rad);
-    
+
             var loddCell = document.createElement("td");
             loddCell.setAttribute("id", "deltakerLodd" + rad);
             loddCell.textContent = loddnr; // Set loddCell textContent to the current ticket number
-    
+
             var nameCell = document.createElement("td");
             nameCell.setAttribute("id", "deltakerNavn" + rad);
             nameCell.textContent = deltakere[i].navn;
-        
+
             newRow.appendChild(nameCell);
             newRow.appendChild(loddCell);
             deltakertabell.appendChild(newRow);
@@ -231,41 +164,136 @@ function giLodd() {
 function velgVinner() {
     var deltakertabell = document.getElementById("tableBodyLeft");
     var numDeltakere = deltakertabell.rows.length;
-    
+
     if (numDeltakere == 0) {
-      alert("Ingen deltakere igjen i raffle!");
-      return;
+        alert("Ingen lodd å trekke!");
+        return;
     }
-    
+
     // Choose a random winner index from deltakertabell
     var winnerIndex = Math.floor(Math.random() * numDeltakere);
-    
+
     // Get the winning row from deltakertabell
     var winningRow = deltakertabell.rows[winnerIndex];
-    
+
     // Get the winning ticket number from loddCell in the winning row
     var loddCell = winningRow.querySelector("td:nth-child(2)"); // Assuming loddCell is the second <td> in each row
-    var winningTicket = loddCell.textContent;   
-    
+    var winningTicket = loddCell.textContent;
+
     // Grey out the winning ticket number
     loddCell.style.backgroundColor = "#ddd";
     loddCell.style.color = "#888";
-    
+
     // Remove the winning row from deltakertabell
     deltakertabell.deleteRow(winnerIndex);
-    
+
     // Return the name of the winner and their winning ticket number
     var nameCell = winningRow.querySelector("td:nth-child(1)"); // Assuming nameCell is the first <td> in each row
     var winnerName = nameCell.textContent;
 
-    alert(winnerName + " vant med lodd#" + winningTicket + "!");
-    return winnerName + ", " + winningTicket;
-  }
-  
+    setTimeout(function() {
+        alert(winnerName + " vant med lodd #" + winningTicket + "!");
+    }, 6900);
+}
 
-  function clearTableBodyLeft() {
-    var deltakertabell = document.getElementById("tableBodyLeft");
-    while (deltakertabell.firstChild) {
-      deltakertabell.removeChild(deltakertabell.firstChild);
+
+// BYTT LYD FØR INNSENDING
+function playSound(src, onEnded) {
+    var audio = new Audio(src);
+    audio.play();
+    audio.onended = onEnded;
+}
+
+// function that allows the user to add a regular participant to the list
+// also adds the name to the JSON file
+function addNavn() {
+    var navn = prompt("Skriv inn navnet til deltakeren:");
+    if (confirm("Er dette riktig navn: " + navn + "?")) {
+        var navneliste = localStorage.getItem("Navneliste");
+        
+        if (navneliste) {
+            try {
+                navneliste.push(navn);
+            } catch (e) {
+                console.error("Failed to parse Navneliste from local storage: ", e);
+            }
+        } else {
+            console.error("Navneliste not found in local storage");
+        }
     }
-  }
+}
+
+
+function addGuest() {
+    var name = prompt("Skriv inn navnet til gjesten:");
+    if (name === null || name === undefined) {
+        return;
+    }
+    var tickets = parseInt(prompt("Skriv inn anntall lodd ønsket:"));
+    if (tickets === null || tickets === undefined || tickets <= 0) {
+        return;
+    }
+
+    if (name && tickets > 0) {
+        for (var i = 0; i < tickets; i++) {
+            var tableBody = document.getElementById("tableBodyLeft");
+            var newRow = tableBody.insertRow(-1);
+            var nameCell = newRow.insertCell(0);
+            var ticketsCell = newRow.insertCell(1);
+
+            newRow.setAttribute("id", "guestRow" + i);
+            nameCell.textContent = name;
+            ticketsCell.textContent = ++lodd;
+
+            tableBody.appendChild(newRow);
+        }
+    }
+}
+
+function clearTableBody(table) {
+    var deltakertabell = document.getElementById(table);
+    while (deltakertabell.firstChild) {
+        deltakertabell.removeChild(deltakertabell.firstChild);
+    }
+}
+
+// downloads the navneliste.txt file
+function downloadNavneliste() {
+    var deltakertabell = document.getElementById("tableBody");
+    while (deltakertabell.firstChild) {
+        deltakertabell.removeChild(deltakertabell.firstChild);
+    }
+
+    var navneliste = localStorage.getItem("Navneliste");
+    var blob = new Blob([navneliste], { type: "text/plain" });
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement("a");
+
+    link.href = url;
+    link.download = "navneliste.txt";
+    document.body.appendChild(link);
+    link.click();
+}
+
+// looks for a file input element and adds an event listener to it
+// when the DOM is loaded, the event listener will be loaded
+// when the user selects a file, the file will be read and the contents will be passed to the txtToJSON function
+// the returned JSON object will be stored in the browser's local storage
+document.addEventListener('DOMContentLoaded', () => {
+    const fileInput = document.getElementById('file-input');
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const contents = e.target.result;
+                const json = JSON.parse(contents);
+                localStorage.setItem("Navneliste", contents) // You can use jsonStorage(json) here to store the generated JSON object
+                storeCache(json);
+                fillTable();
+            };
+            reader.readAsText(file);
+        }
+    });
+});
