@@ -66,7 +66,7 @@ function cacheExists() {
     } else {
         // needs delay to fill table, otherwise the function is called before the table is created
         console.log("Cache found");
-        setTimeout(function() {
+        setTimeout(function () {
             fillTable();
         }, 100);
     }
@@ -76,7 +76,6 @@ function cacheExists() {
 document.addEventListener("DOMContentLoaded", function () {
     cacheExists();
 });
-
 
 function fillTable() {
     var table = document.getElementById("tableBody");
@@ -112,10 +111,10 @@ function giLodd() {
     var deltakere = [];
     var rad = 0;
 
-    if (sessionStorage.getItem("loddnr") != null) {
+    if (localStorage.getItem("loddnr") != null) {
         var loddnr = 0;
     } else {
-        var loddnr = sessionStorage.getItem("loddnr");
+        var loddnr = localStorage.getItem("loddnr");
     }
 
     for (var i = 0; i < navneliste.rows.length; i++) {
@@ -132,7 +131,7 @@ function giLodd() {
             lodd += parseInt(inputRow.value);
             console.log("lodd tildelt: " + lodd);
             // TODO: change to localStorage
-            sessionStorage.setItem("deltakere", JSON.stringify(deltakere));
+            localStorage.setItem("deltakere", JSON.stringify(deltakere));
         }
     }
 
@@ -191,9 +190,9 @@ function velgVinner() {
     var nameCell = winningRow.querySelector("td:nth-child(1)"); // Assuming nameCell is the first <td> in each row
     var winnerName = nameCell.textContent;
 
-    setTimeout(function() {
+    setTimeout(function () {
         alert(winnerName + " vant med lodd #" + winningTicket + "!");
-    }, 6900);
+    }, 1100);
 }
 
 
@@ -207,13 +206,22 @@ function playSound(src, onEnded) {
 // function that allows the user to add a regular participant to the list
 // also adds the name to the JSON file
 function addNavn() {
-    var navn = prompt("Skriv inn navnet til deltakeren:");
-    if (confirm("Er dette riktig navn: " + navn + "?")) {
+    var nyttNavn = prompt("Skriv inn navnet til deltakeren:");
+    if (confirm("Er dette riktig navn: " + nyttNavn + "?")) {
         var navneliste = localStorage.getItem("Navneliste");
-        
         if (navneliste) {
             try {
-                navneliste.push(navn);
+                var navnelisteJSON = JSON.parse(navneliste);
+                navnelisteJSON[0].navn.push(nyttNavn);
+                navnelisteJSON[0].navn.sort(function (a, b) {
+                    return a.toLowerCase().localeCompare(b.toLowerCase());
+                });
+                var newIndex = navnelisteJSON[0].navn.findIndex(function (name) {
+                    return name === nyttNavn;
+                });
+                localStorage.setItem("Navneliste", JSON.stringify(navnelisteJSON));
+                clearTableBody("tableBody");
+                fillTable("tableBody");
             } catch (e) {
                 console.error("Failed to parse Navneliste from local storage: ", e);
             }
@@ -288,12 +296,39 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
             reader.onload = (e) => {
                 const contents = e.target.result;
+                console.log(contents);
                 const json = JSON.parse(contents);
                 localStorage.setItem("Navneliste", contents) // You can use jsonStorage(json) here to store the generated JSON object
                 storeCache(json);
-                fillTable();
+                clearTableBody("tableBody");
+                fillTable("tableBody");
             };
             reader.readAsText(file);
+        }
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    var hamburgerButton = document.querySelector('.hamburger-button');
+    var modalOverlay = document.querySelector('.modal-overlay');
+    var closeButton = document.querySelector('.close-button');
+
+    hamburgerButton.addEventListener('click', function () {
+        modalOverlay.style.display = 'block';
+        hamburgerButton.classList.toggle('active');
+    });
+
+    closeButton.addEventListener('click', function () {
+        modalOverlay.style.display = 'none';
+        hamburgerButton.classList.remove('active');
+    });
+
+    modalOverlay.addEventListener('click', function(event) {
+        if (!event.target.closest('.modal')) {
+            console.log('clicked outside modal');
+            modalOverlay.style.display = 'none';
+            hamburgerButton.classList.remove('active');
         }
     });
 });

@@ -17,6 +17,17 @@
     
 <!-- Responsiv header, sender deg til index(hjem) -->
     <div class="header-section">
+        <div class="modal-overlay">
+            <div class="modal">
+              <button class="close-button">&times;</button>
+              <ul>
+                <li><a onclick="downloadNavneliste()">Last ned navneliste</a></li>
+                <li><a onclick="addGuest()">Legg til gjest</a></li>
+                <li><a onclick="addNavn()">Legg til nytt navn</a></li>
+              </ul>
+            </div>
+          </div>
+          <button class="hamburger-button">&#9776;</button>
         <div class="heading-container">
             <a href="/index.html" aria-current="page" class="heading-link inline-block">
                 <h1 class="heading">Kakeotteri</h1>
@@ -26,8 +37,8 @@
             </div>
         </div>
             <div class="nav-bar">
-                    <a href="./lodd.html" id="nav-lodd" class="nav-link">Loddkjøp</a>
-                    <a href="./trekning.html" id="nav-trekning" class="nav-link">Trekning</a>
+                <a onclick="playSound('sounds/trekning.mp3', velgVinner())" id="nav-trekning" class="nav-link">Kjør trekning</a>
+                <a onclick="giLodd()" id="nav-lodd" class="nav-link">Del ut lodd</a>
             </div>
         </div>
     </div>
@@ -70,17 +81,8 @@
                 </div>
                 </div>
             </div>
-            <button onclick="giLodd()">Gi Lodd</button> 
-
-            <button onclick="playSound('sounds/trekning1.mp3', velgVinner())">Velg vinner</button>
-
-            <button onclick="downloadNavneliste()">Last ned navneliste</button>
 
             <input type="file" id="file-input" accept=".txt">Last opp navneliste</button>
-
-            <button onclick="addGuest()">Legg til gjest</button>
-
-            <button onclick="addNavn()">Legg til ny fast deltaker</button>
       </main>
   
     
