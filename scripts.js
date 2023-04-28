@@ -1,5 +1,5 @@
 var lodd = 0;
-
+var lyd = 1;
 function loadFile() {
     document.getElementById('file').onchange = () => {
         const file = document.getElementById('file').files[0];
@@ -202,17 +202,31 @@ function velgVinner() {
     var nameCell = winningRow.querySelector("td:nth-child(1)"); // Assuming nameCell is the first <td> in each row
     var winnerName = nameCell.textContent;
 
+    if (lyd === 1) {
+        playSound("sounds/trekning.mp3");
     setTimeout(function () {
         alert(winnerName + " vant med lodd #" + winningTicket + "!");
-    }, 1100);
+    }, 30000);
+    } else {
+        alert(winnerName + " vant med lodd #" + winningTicket + "!");
+    }
+}
+
+function toggleSound() {
+    if (lyd === 1) {
+        lyd = 0;
+        document.getElementById("lyd").innerHTML = "Lyd: På";
+    } else {
+        lyd = 1;
+        document.getElementById("lyd").innerHTML = "Lyd: Av";
+    }
 }
 
 
 // BYTT LYD FØR INNSENDING
-function playSound(src, onEnded) {
+function playSound(src) {
     var audio = new Audio(src);
     audio.play();
-    audio.onended = onEnded;
 }
 
 // function that allows the user to add a regular participant to the list
@@ -300,6 +314,7 @@ function downloadNavneliste() {
 // when the user selects a file, the file will be read and the contents will be passed to the txtToJSON function
 // the returned JSON object will be stored in the browser's local storage
 document.addEventListener('DOMContentLoaded', () => {
+    toggleSound();
     const fileInput = document.getElementById('file-input');
     fileInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
