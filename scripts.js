@@ -58,7 +58,7 @@ function cacheExists() {
             reader.readAsText(file);
         });
         // Display popup
-        alert('Please select a file');
+        alert('Velg en fil for å laste inn navnelisten');
         setTimeout(function () {
             fileInput.click();
         }, 100);
@@ -229,33 +229,41 @@ function playSound(src) {
     audio.play();
 }
 
+function leggTilNavn(navn) {
+    var navnelisteJSON = JSON.parse(localStorage.getItem("Navneliste"));
+    navnelisteJSON[0].navn.push(navn);
+    localStorage.setItem("Navneliste", JSON.stringify(navnelisteJSON));
+}
+
 // function that allows the user to add a regular participant to the list
 // also adds the name to the JSON file
 function addNavn() {
     var nyttNavn = prompt("Skriv inn navnet til deltakeren:");
-    if (confirm("Er dette riktig navn: " + nyttNavn + "?")) {
-        var navneliste = localStorage.getItem("Navneliste");
-        if (navneliste) {
-            try {
-                var navnelisteJSON = JSON.parse(navneliste);
-                navnelisteJSON[0].navn.push(nyttNavn);
-                navnelisteJSON[0].navn.sort(function (a, b) {
-                    return a.toLowerCase().localeCompare(b.toLowerCase());
-                });
-                var newIndex = navnelisteJSON[0].navn.findIndex(function (name) {
-                    return name === nyttNavn;
-                });
-                localStorage.setItem("Navneliste", JSON.stringify(navnelisteJSON));
+    if (nyttNavn && nyttNavn != "") {
+        if (confirm("Er dette riktig navn: " + nyttNavn + "?")) {
+            var navneliste = localStorage.getItem("Navneliste");
+            if (navneliste) {
+                try {
+                    leggTilNavn(nyttNavn);
+                    clearTableBody("tableBody");
+                    fillTable("tableBody");
+                } catch (e) {
+                    console.error("Failed to parse Navneliste from local storage: ", e);
+                }
+            } else {
+                console.error("Navneliste not found in local storage");
+                var json = [{"navn":[]}];
+                localStorage.setItem("Navneliste", JSON.stringify(json));
+                leggTilNavn(nyttNavn);
                 clearTableBody("tableBody");
                 fillTable("tableBody");
-            } catch (e) {
-                console.error("Failed to parse Navneliste from local storage: ", e);
             }
         } else {
-            console.error("Navneliste not found in local storage");
+            console.log("addNavn avbrutt");
         }
     }
 }
+
 
 
 function addGuest() {
@@ -293,11 +301,6 @@ function clearTableBody(table) {
 
 // downloads the navneliste.txt file
 function downloadNavneliste() {
-    var deltakertabell = document.getElementById("tableBody");
-    while (deltakertabell.firstChild) {
-        deltakertabell.removeChild(deltakertabell.firstChild);
-    }
-
     var navneliste = localStorage.getItem("Navneliste");
     var blob = new Blob([navneliste], { type: "text/plain" });
     var url = URL.createObjectURL(blob);
