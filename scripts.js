@@ -1,5 +1,5 @@
 var lodd = 0;
-var lyd = 1;
+var lyd = 0;
 function loadFile() {
     document.getElementById('file').onchange = () => {
         const file = document.getElementById('file').files[0];
@@ -215,10 +215,10 @@ function velgVinner() {
 function toggleSound() {
     if (lyd === 1) {
         lyd = 0;
-        document.getElementById("lyd").innerHTML = "Lyd: På";
+        document.getElementById("lyd").innerHTML = "Lyd: Av";
     } else {
         lyd = 1;
-        document.getElementById("lyd").innerHTML = "Lyd: Av";
+        document.getElementById("lyd").innerHTML = "Lyd: På";
     }
 }
 
