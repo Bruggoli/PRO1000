@@ -4,117 +4,90 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hjem | Vinlotteri</title>
+  <title>Kakelotteri</title>
 
   <link rel="stylesheet" href="style.css">
+  <script src="scripts.js"></script>
 </head>
 <body>
     <div id="page-container">
         <div id="content-wrapper">
   
   <div class="page">
-    
+
 <!-- Responsiv header, sender deg til index(hjem) -->
     <div class="header-section">
+        <div class="modal-overlay">
+            <div class="modal">
+              <button class="close-button">&times;</button>
+              <ul>
+                  <li><a onclick="addNavn()">Legg til nytt navn</a></li>
+                  <li><a onclick="addGuest()">Legg til gjest</a></li>
+                  <li><a onclick="downloadNavneliste()">Last ned navneliste</a></li>
+                  <li><a onclick="toggleSound()" id="lyd"></a></li>
+              </ul>
+            </div>
+          </div>
+          <button class="hamburger-button">&#9776;</button>
         <div class="heading-container">
-            <a href="/index.html" aria-current="page" class="heading-link inline-block">
-                <h1 class="heading">Vinlotteri</h1>
+            <a href="/lodd.html" aria-current="page" class="heading-link inline-block">
+                <h1 class="heading">Kakelotteri</h1>
             </a>
             <div>
-                 <img src="/grapeicon.png" id="grape" alt="image of grape">
+                 <img src="grapeicon.png" id="grape" alt="image of grape">
             </div>
         </div>
-            <div class="nav-bar">
-                    <a href="./lodd.html" id="nav-lodd" class="nav-link">Loddkjøp</a>
-                    <a href="./trekning.html" id="nav-trekning" class="nav-link">Trekning</a>
-            </div>
         </div>
     </div>
     
-
-
     <main>
-
-        <section class="row">
+        <section>
+            <div id="filopplastningsboks">
+                <p>Last inn fil her</p>
+                <input type="file" id="file-input" accept=".txt"></button>
+            </div>
         </section>
-
         <div class="row">
            <div class="column">
             <div class="scroll">
             <table class="table-left">
                 <thead>
-                <tr>
-                    <th>Loddnr.</th>
-                    <th>Initialer</th>
-                    <th>Navn</th>
-                </tr>
+                    <tr>
+                        <th>Navn</th>
+                        <th>Ønskede lodd</th>
+                    </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>KL</td>
-                    <td>Kaisa Lien</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>MJL</td>
-                    <td>Marius Jølsen Lindberg</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>AR</td>
-                    <td>Adrian Indergård Ro</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>MMM</td>
-                    <td>Markus Moen Magnussen</td>
-                </tr>
-            </tbody>
+                <tbody id="tableBody">
+                </tbody>
             </table>
         </div>
-            </div>
-
+            <!--Knapp for å dele ut lodd-->
+        <div class="button">
+            <a onclick="giLodd()" id="nav-lodd" class="nav-link">Del ut lodd</a>
+        </div>
+        </div>
             <div class="column">
                 <div class="scroll">
                 <table class="table-right">
                     <thead>
                     <tr>
-                        <th>Initialer</th>
                         <th>Navn</th>
-                        <th>Antall lodd</th>
+                        <th>Loddnr.</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>KL</td>
-                        <td>Kaisa Lien</td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>MJL</td>
-                        <td>Marius Jølsen Lindberg</td>
-                        <td>7</td>
-                    </tr>
-                    <tr>
-                        <td>AIR</td>
-                        <td>Adrian Indergård Ro</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>MMM</td>
-                        <td>Markus Moen Magnussen</td>
-                        <td>10</td>
-                    </tr>
-                </tbody>
+                    <tbody id="tableBodyLeft">
+                    </tbody>
                 </table>
                 </div>
+                <!--Knapp for å kjøre trekning-->
+                <div class="button">
+                    <a onclick="playSound('sounds/trekning.mp3', velgVinner())" id="nav-trekning" class="nav-link">Kjør trekning</a>
                 </div>
-            </div> 
+                </div>
+
+            </div>
+
       </main>
-  
-    
-   
       <footer>
         <div class="footer-content">
           <p class="footer-p">PRO1000</p>
@@ -127,5 +100,3 @@
 </div>
 </body>
 </html>
-
-
